@@ -1,6 +1,6 @@
 name = "dummy-worker"
 type = "webpack"
-zone_id = ""
+zone_id = "c19f553b5d25c7c6e4e121f4ae6bb09c"
 private = false
 account_id = "11bfbc225706d5422b8edd526a82fbdc"
-route = ""
+route = "crunchy-arcane-riddles.com/worker/*"

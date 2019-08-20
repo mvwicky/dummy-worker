@@ -80,7 +80,7 @@ export class Router {
     if (route !== undefined) {
       return route.handler(req);
     }
-    return new Response("resource not found", {
+    return new Response(`resource not found\n${req.url}`, {
       status: 404,
       statusText: "not found",
       headers: {

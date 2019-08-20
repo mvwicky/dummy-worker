@@ -1,8 +1,8 @@
 import Jimp from "jimp";
 import { Dimensions } from "./types";
 
-export const dimensionRe = /\/(?<w>\d+)x(?<h>\d+)\/?/;
-export const colorRe = /\/(?<w>\d+)x(?<h>\d+)\/(?<bg>[0-9a-f]{3,6})\/(?<fg>[0-9a-f]{3,6})\/?/i;
+export const dimensionRe = /\/worker\/(?<w>\d+)x(?<h>\d+)\/?/;
+export const colorRe = /\/worker\/(?<w>\d+)x(?<h>\d+)\/(?<bg>[0-9a-f]{3,6})\/(?<fg>[0-9a-f]{3,6})\/?/i;
 
 export function errResponse(
   body: string,

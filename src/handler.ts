@@ -12,7 +12,7 @@ import {
 export async function handleRequest(request: Request): Promise<Response> {
   const r = new Router();
 
-  r.get("/", rootHandler);
+  r.get("/worker/", rootHandler);
   r.get(dimensionRe, dimensionHandler);
   r.get(colorRe, colorDimHandler);
 
@@ -57,13 +57,15 @@ async function imageResponse(
 ) {
   try {
     const buf = await createImageBuffer(width, height, bg_color, fmt);
-    return new Response(buf, {
+    let response = new Response(buf, {
       status: 200,
       headers: {
         "cache-control": `public, max-age=${maxAge}`,
         "content-type": fmt,
       },
     });
+    response.headers.set("Cache-Control", `public, max-age=${maxAge}`);
+    return response;
   } catch (err) {
     return new Response("unable to create an image", {
       status: 500,
