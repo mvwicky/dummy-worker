@@ -1,16 +1,20 @@
 import Jimp from "jimp";
 
 import { Router } from "./router";
-import { createImageBuffer } from "./helpers";
-
-const dimensionRe = /\/(\d+)x(\d+)\/?/;
-const colorRe = /\/(?<w>\d+)x(?<h>\d+)\/(?<bg>[0-9a-f]{3,6})\/(?<fg>[0-9a-f]{3,6})\/?/i;
+import {
+  createImageBuffer,
+  matchDimensions,
+  dimensionRe,
+  colorRe,
+  errResponse,
+} from "./helpers";
 
 export async function handleRequest(request: Request): Promise<Response> {
   const r = new Router();
 
   r.get("/", rootHandler);
   r.get(dimensionRe, dimensionHandler);
+  r.get(colorRe, colorDimHandler);
 
   const res = await r.route(request);
   return res;
@@ -21,28 +25,27 @@ async function rootHandler() {
 }
 
 async function dimensionHandler(req: Request) {
-  const match = req.url.match(dimensionRe);
-  if (match === null || match.length !== 2) {
-    return new Response("unable to find dimensions", {
-      status: 400,
-      statusText: "dimensions were unfindable",
-      headers: {
-        "content-type": "text/plain",
-      },
-    });
+  const dim = matchDimensions(req.url);
+  if (typeof dim === "string") {
+    return errResponse("unable to find and/or parse dimensions from URL", dim);
   }
-  const dims = match.map((m) => Number(m));
-  if (dims.some((n) => Number.isNaN(n))) {
-    return new Response("non-numeric dimensions", {
-      status: 400,
-      statusText: "dimensions were not numbers",
-      headers: {
-        "content-type": "text/plain",
-      },
-    });
-  }
-  const [width, height] = dims;
+  const [width, height] = dim;
   return imageResponse(width, height, "#cceeff", Jimp.MIME_PNG);
+}
+
+async function colorDimHandler(req: Request) {
+  const dim = matchDimensions(req.url);
+  if (typeof dim === "string") {
+    return errResponse("unable to find and/or parse dimensions from URL", dim);
+  }
+  const [width, height] = dim;
+  const match = req.url.match(colorRe);
+  if (match === null || match.groups === undefined) {
+    return errResponse("unable to parse background and foreground colors", "");
+  }
+  const groups = match.groups;
+  const bg = `#${groups.bg}`;
+  return imageResponse(width, height, bg, Jimp.MIME_PNG);
 }
 
 async function imageResponse(

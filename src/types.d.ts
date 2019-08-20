@@ -8,6 +8,8 @@ interface Handler {
   (request: Request): Promise<Response>;
 }
 
+type Dimensions = [number, number];
+
 type ReqMatcher = (req: Request) => boolean;
 
 type Condition = ReqMatcher[] | ReqMatcher;
