@@ -60,7 +60,7 @@ async function imageResponse(
     return new Response(buf, {
       status: 200,
       headers: {
-        "cache-control": `public, max-age: ${maxAge}`,
+        "cache-control": `public, max-age=${maxAge}`,
         "content-type": fmt,
       },
     });
