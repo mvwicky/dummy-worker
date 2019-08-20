@@ -53,10 +53,17 @@ async function imageResponse(
   height: number,
   bg_color: string,
   fmt: string,
+  maxAge: number = 86400,
 ) {
   try {
     const buf = await createImageBuffer(width, height, bg_color, fmt);
-    return new Response(buf, { status: 200 });
+    return new Response(buf, {
+      status: 200,
+      headers: {
+        "cache-control": `public, max-age: ${maxAge}`,
+        "content-type": fmt,
+      },
+    });
   } catch (err) {
     return new Response("unable to create an image", {
       status: 500,
