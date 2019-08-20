@@ -9,6 +9,7 @@ module.exports = {
     path: path.join(__dirname, "dist"),
   },
   devtool: "source-map",
+  plugins: [new webpack.DefinePlugin({ "process.browser": "true" })],
   mode,
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
