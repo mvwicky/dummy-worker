@@ -1,4 +1,6 @@
+import {} from "@cloudflare/workers-types";
 import Jimp from "jimp";
+import { html, renderToString } from "@popeindustries/lit-html-server";
 
 import { Router } from "./router";
 import {
@@ -12,7 +14,7 @@ import {
 export async function handleRequest(request: Request): Promise<Response> {
   const r = new Router();
 
-  r.get("/worker/", rootHandler);
+  r.get(/(\/worker)?\//, rootHandler);
   r.get(dimensionRe, dimensionHandler);
   r.get(colorRe, colorDimHandler);
 
@@ -20,8 +22,19 @@ export async function handleRequest(request: Request): Promise<Response> {
   return res;
 }
 
-async function rootHandler() {
-  return imageResponse(766, 388, "#cceeff", Jimp.MIME_PNG);
+async function rootHandler(req: Request) {
+  const body = html`
+    <!DOCTYPE html>
+    <html>
+      <body>
+        <h1>${req.url}</h1>
+        <br />
+        ${String(req.cf.latitude)}
+      </body>
+    </html>
+  `;
+  const bodyString = await renderToString(body);
+  return new Response(bodyString, { headers: { "content-type": "text/html" } });
 }
 
 async function dimensionHandler(req: Request) {
@@ -57,13 +70,10 @@ async function imageResponse(
 ) {
   try {
     const buf = await createImageBuffer(width, height, bg_color, fmt);
-    let response = new Response(buf, {
+    const response = new Response(buf, {
       status: 200,
-      headers: {
-        "cache-control": `public, max-age=${maxAge}`,
-        "content-type": fmt,
-      },
     });
+    response.headers.set("Content-Type", fmt);
     response.headers.set("Cache-Control", `public, max-age=${maxAge}`);
     return response;
   } catch (err) {

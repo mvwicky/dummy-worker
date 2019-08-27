@@ -26,13 +26,39 @@ const Path = (regExp: RegExp | string) => (req: Request) => {
 
 export class Router {
   routes: Route[];
-  constructor() {
+  constructor(readonly prefix: string = "") {
+    if (!prefix.startsWith("/")) {
+      this.prefix = /\//.toString() + prefix;
+    } else {
+      this.prefix = prefix;
+    }
+
     this.routes = [];
   }
 
   handle(conditions: Condition, handler: Handler) {
     this.routes.push({ conditions, handler });
     return this;
+  }
+
+  private prepUrl(url: RegExp | string) {
+    let strUrl: string;
+    let flags: string | undefined;
+
+    if (typeof url !== "string") {
+      strUrl = url.toString();
+      flags = url.flags;
+    } else {
+      strUrl = url;
+      flags = undefined;
+    }
+
+    const close = strUrl.lastIndexOf("/");
+    const re = new RegExp(
+      ["/", this.prefix, strUrl.slice(1, close)].join(""),
+      flags,
+    );
+    return re;
   }
 
   connect(url: RegExp | string, handler: Handler) {
