@@ -15,22 +15,22 @@
   "license": "MIT",
   "devDependencies": {
     "@cloudflare/workers-types": "^1.0.6",
-    "@types/chai": "^4.1.7",
+    "@types/chai": "^4.2.4",
     "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
-    "eslint": "^6.2.2",
-    "mocha": "^6.1.4",
+    "eslint": "^6.6.0",
+    "mocha": "^6.2.2",
     "prettier": "^1.18.2",
     "service-worker-mock": "^2.0.3",
     "source-map-loader": "^0.2.4",
-    "source-map-support": "^0.5.12",
-    "ts-loader": "^6.0.4",
-    "typescript": "^3.5.3",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.6"
+    "source-map-support": "^0.5.16",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "@popeindustries/lit-html-server": "^1.3.0",
-    "jimp": "^0.6.4"
+    "@popeindustries/lit-html-server": "^1.6.0",
+    "jimp": "^0.6.8"
   }
 }
