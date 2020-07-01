@@ -1,4 +1,4 @@
-import {} from "@cloudflare/workers-types";
+import "@cloudflare/workers-types";
 import Jimp from "jimp";
 import { html, renderToString } from "@popeindustries/lit-html-server";
 
@@ -28,8 +28,6 @@ async function rootHandler(req: Request) {
     <html>
       <body>
         <h1>${req.url}</h1>
-        <br />
-        ${String(req.cf.latitude)}
       </body>
     </html>
   `;

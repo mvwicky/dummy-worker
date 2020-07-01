@@ -1,7 +1,8 @@
 {
   "name": "dummy-worker",
   "version": "1.0.0",
-  "description": "Cloudflare worker TypeScript template",
+  "description": "Placeholder image generator as a Cloudflare worker",
+  "repository": "https://github.com/mvwicky/dummy-worker.git",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -15,22 +16,24 @@
   "license": "MIT",
   "devDependencies": {
     "@cloudflare/workers-types": "^1.0.6",
-    "@types/chai": "^4.2.4",
-    "@types/mocha": "^5.2.7",
-    "chai": "^4.2.0",
-    "eslint": "^6.6.0",
-    "mocha": "^6.2.2",
-    "prettier": "^1.18.2",
-    "service-worker-mock": "^2.0.3",
+    "@types/bluebird": "^3.5.29",
+    "@types/chai": "^4.0",
+    "@types/mocha": "^7.0",
+    "bluebird": "^3.7.2",
+    "chai": "^4.0",
+    "eslint": "^6.8.0",
+    "mocha": "^7.0",
+    "prettier": "^1.19.1",
+    "service-worker-mock": "^2.0.4",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.16",
     "ts-loader": "^6.2.1",
-    "typescript": "^3.6.4",
-    "webpack": "^4.41.2",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "@popeindustries/lit-html-server": "^1.6.0",
-    "jimp": "^0.6.8"
+    "@popeindustries/lit-html-server": "^2.0",
+    "jimp": "^0.9.3"
   }
 }

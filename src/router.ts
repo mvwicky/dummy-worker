@@ -28,7 +28,7 @@ export class Router {
   routes: Route[];
   constructor(readonly prefix: string = "") {
     if (!prefix.startsWith("/")) {
-      this.prefix = /\//.toString() + prefix;
+      this.prefix = `/${prefix}`;
     } else {
       this.prefix = prefix;
     }
@@ -42,16 +42,9 @@ export class Router {
   }
 
   private prepUrl(url: RegExp | string) {
-    let strUrl: string;
-    let flags: string | undefined;
-
-    if (typeof url !== "string") {
-      strUrl = url.toString();
-      flags = url.flags;
-    } else {
-      strUrl = url;
-      flags = undefined;
-    }
+    const strUrl: string = typeof url === "string" ? url : url.toString();
+    const flags: string | undefined =
+      typeof url === "string" ? undefined : url.flags;
 
     const close = strUrl.lastIndexOf("/");
     const re = new RegExp(

@@ -1,7 +1,11 @@
 name = "dummy-worker"
 type = "webpack"
-zone_id = "c19f553b5d25c7c6e4e121f4ae6bb09c"
 private = false
 account_id = "11bfbc225706d5422b8edd526a82fbdc"
-route = "crunchy-arcane-riddles.com/worker/*"
+workers_dev = true
 webpack_config = "webpack.config.js"
+
+[env.production]
+workers_dev = false
+zone_id = "c19f553b5d25c7c6e4e121f4ae6bb09c"
+route = "crunchy-arcane-riddles.com/worker/*"
